@@ -1,0 +1,27 @@
+{
+  "name": "addis_music",
+  "version": "1.0.0",
+  "description": "",
+  "main": "runserver.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node runserver.js",
+    "dev": "nodemon runs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "expressjs": "^1.0.1",
+    "mongoose": "^8.9.2",
+    "morgan": "^1.10.0",
+    "react-router-dom": "^7.1.0",
+    "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
