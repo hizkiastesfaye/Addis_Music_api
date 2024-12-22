@@ -17,9 +17,33 @@ describe('test /music',()=>{
         .get('/')
         console.log(res.text)
     })
+
+    const song1 = {
+        title: 'derese',
+        artist:'abebaw',
+        album:'manew',
+        genre:'afrobit'
+    }
+    const song2 = {
+        title: 'adea',
+        artist:'abebaw',
+        album:'manew',
+        genre:'pop'
+    }
     test('test /add',async()=>{
         const res = await request(app)
-        .get('/add')
+        .post('/add')
+        .send(song2)
         console.log(res.text)
+    })
+    test.only('test /get',async()=>{
+        const res = await request(app)
+        .get('/get')
+        console.log(res.body)
+    })
+    test('test /get?',async()=>{
+        const res = await request(app)
+        .get('/get?album=manew&title=adea')
+        console.log(res.body)
     })
 })

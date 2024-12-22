@@ -15,21 +15,11 @@ app.get('/music',(req,res)=>{
     res.send('Welcome to addis music')
 })
 app.get('/post',async (req,res)=>{
-    const datas={title:'koye', artist:'abebe',album:'sewaseew',genre:'afrobit'}
 
-    const newSong = new SongModel({
-        title: datas.title,
-        artist:datas.artist,
-        album:datas.album,
-        genre:datas.genre
-    })
-    console.log('-----------', newSong)
-    const ssong = await newSong.save()
-    res.json(ssong)
-    // res.send('Welcome to addis music')
+    res.send('Welcome to addis music')
     
 })
-app.get('/get',async (req,res)=>{
+app.get('/gett',async (req,res)=>{
     const anoSong = await SongModel.findOne({title:'koye'})
     if(anoSong.length ==0){
         res.send('try again')
