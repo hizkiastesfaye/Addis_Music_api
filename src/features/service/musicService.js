@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const { query } = require('express')
 const SongModel = require('../model/musicModel')
 
@@ -33,7 +34,6 @@ exports.getMusic = async (req,res)=>{
         return(oneSong)
     }
  
-    const mus = 'This is music get service'
     const allSongs = await SongModel.find()
     if(allSongs.length === 0){
         throw new Error('Song not found')
@@ -41,6 +41,7 @@ exports.getMusic = async (req,res)=>{
     let ss = []
     for (let i=0; i< allSongs.length; i++){
         ss.push({
+            id:allSongs[i]._id,
             title:allSongs[i].title,
             artist:allSongs[i].artist,
             album:allSongs[i].album,
@@ -50,17 +51,59 @@ exports.getMusic = async (req,res)=>{
     return ss
 }
 
-
-
 exports.updateMusic = async (req,res)=>{
-    const mus = 'This is music update service'
-    return mus
+    const param = req.params.id
+    if(!param){
+        throw new Error('use Id as parameter')
+    }
+    console.log(req.params,req.body)
+    try{
+        const id = new mongoose.Types.ObjectId(param)
+
+        const updatMusic = await SongModel.findOneAndUpdate(
+            {_id:id},
+            {
+                title:req.body.title,
+                artist: req.body.artist,
+                album: req.body.album,
+                genre: req.body.genre
+            },
+            {new:true}
+        )
+        if(Object.keys(updatMusic).length === 0){
+            throw new Error('the song not found')
+        }
+        console.log(updatMusic)
+        
+        return updatMusic
+    }
+    catch(error){
+        throw new Error('Incorrect Id')
+    }
 }
 
 
 
 exports.deleteMusic = async (req,res)=>{
-    const mus = 'This is music delete service'
-    return mus
+
+    const param = req.params.id
+    if(!param){
+        throw new Error('use Id as parameter')
+    }
+    console.log(req.params,req.body)
+    try{
+        const id = new mongoose.Types.ObjectId(param)
+
+        const deletMusic = await SongModel.findOneAndDelete({_id:id})
+        if(Object.keys(deletMusic).length === 0){
+            throw new Error('the song not found')
+        }
+        console.log(deletMusic)
+        
+        return deletMusic
+    }
+    catch(error){
+        throw new Error('Incorrect Id')
+    }
 }
 

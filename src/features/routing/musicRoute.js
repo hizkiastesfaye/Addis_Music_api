@@ -7,7 +7,7 @@ router.get('/',(req,res)=>{
 })
 router.post('/add',musicController.addMusic)
 router.get('/get/',musicController.getMusic)
-router.get('/update',musicController.updateMusic)
-router.get('/delete',musicController.deleteMusic)
+router.put('/update/:id',musicController.updateMusic)
+router.delete('/delete/:id',musicController.deleteMusic)
 
 module.exports = router;

@@ -30,13 +30,19 @@ describe('test /music',()=>{
         album:'manew',
         genre:'pop'
     }
+    const song3 = {
+        title: 'john',
+        artist:'abebaw',
+        album:'manew',
+        genre:'afrobit'
+    }
     test('test /add',async()=>{
         const res = await request(app)
         .post('/add')
-        .send(song2)
+        .send(song1)
         console.log(res.text)
     })
-    test.only('test /get',async()=>{
+    test('test /get',async()=>{
         const res = await request(app)
         .get('/get')
         console.log(res.body)
@@ -44,6 +50,17 @@ describe('test /music',()=>{
     test('test /get?',async()=>{
         const res = await request(app)
         .get('/get?album=manew&title=adea')
+        console.log(res.body)
+    })
+    test('test /update/:id',async()=>{
+        const res = await request(app)
+        .put('/update/67686e59aa4dc6b062857fd8')
+        .send(song3)
+        console.log(res.body)
+    })
+    test.only('test /delete/:id',async()=>{
+        const res = await request(app)
+        .delete('/delete/6768f648f0241ed18a223d59')
         console.log(res.body)
     })
 })

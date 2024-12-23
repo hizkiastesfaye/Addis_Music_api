@@ -3,7 +3,7 @@ exports.addMusic = async(req,res)=>{
     
     try{
         const musicc = await addMusicService.addMusic(req)
-        res.send(musicc)
+        res.json({message:musicc})
     }
     catch(err){
         res.status(400).json({error:err.message})
@@ -14,7 +14,7 @@ exports.getMusic = async(req,res)=>{
     
     try{
         const musicc = await addMusicService.getMusic(req)
-        res.send(musicc)
+        res.json({message:musicc})
     }
     catch(err){
         res.status(400).json({error:err.message})
@@ -25,7 +25,7 @@ exports.updateMusic = async(req,res)=>{
     
     try{
         const musicc = await addMusicService.updateMusic(req)
-        res.send(musicc)
+        res.json({message:musicc})
     }
     catch(err){
         res.status(400).json({error:err.message})
