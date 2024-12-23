@@ -16,7 +16,7 @@ services:
     image: addis_music
     restart: unless-stopped
     ports:
-      - "5002:3007"
+      - "3007:3007"
     volumes:
       - .:/usr/src/app
     environment:

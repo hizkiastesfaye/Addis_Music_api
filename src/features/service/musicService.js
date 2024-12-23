@@ -1,8 +1,14 @@
 const mongoose = require('mongoose')
 const { query } = require('express')
+const {validationResult} = require('express-validator')
 const SongModel = require('../model/musicModel')
 
 exports.addMusic = async (req,res)=>{
+    const err = validationResult(req)
+    if(!err.isEmpty()){
+        const errorMessages = err.array().map(error=>error.msg).join(', ')
+        throw new Error(errorMessages)
+    }
     console.log(req.body)
     const {title, artist,album,genre} = req.body
     const songCheck = await SongModel.find({title:title,artist:artist,album:album})
@@ -17,7 +23,7 @@ exports.addMusic = async (req,res)=>{
     })
     console.log('-----------', newSong)
     await newSong.save()
-    return ('successfully added.')
+    return ({message:'successfully added.'})
 }
 
 
@@ -52,6 +58,11 @@ exports.getMusic = async (req,res)=>{
 }
 
 exports.updateMusic = async (req,res)=>{
+    const err = validationResult(req)
+    if(!err.isEmpty()){
+        const errorMessages = err.array().map(error=>error.msg).join(', ')
+        throw new Error(errorMessages)
+    }
     const param = req.params.id
     if(!param){
         throw new Error('use Id as parameter')

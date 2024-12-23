@@ -40,7 +40,7 @@ describe('test /music',()=>{
         const res = await request(app)
         .post('/add')
         .send(song1)
-        console.log(res.text)
+        console.log(res.body)
     })
     test('test /get',async()=>{
         const res = await request(app)
@@ -58,9 +58,30 @@ describe('test /music',()=>{
         .send(song3)
         console.log(res.body)
     })
-    test.only('test /delete/:id',async()=>{
+    test('test /delete/:id',async()=>{
         const res = await request(app)
-        .delete('/delete/6768f648f0241ed18a223d59')
+        .delete('/delete')
         console.log(res.body)
     })
+})
+
+describe('test errors',()=>{
+    const song4 = {
+        title: 'wills',
+        artist:'abebaw',
+        
+    }
+    test('test /add',async()=>{
+        const res = await request(app)
+        .post('/add')
+        .send(song4)
+        console.log(res.body)
+    })
+    test.only('test /update/:id',async()=>{
+        const res = await request(app)
+        .put('/update/67686e59aa4dc6b062857fd8')
+        .send(song4)
+        console.log(res.body)
+    })
+    
 })
