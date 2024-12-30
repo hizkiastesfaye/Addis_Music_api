@@ -33,8 +33,8 @@ exports.getMusic = async (req,res)=>{
     if(Object.keys(req.query).length !== 0){
         const queryKey = queryy[0]
         const queryValue = queryy[1]
-        const oneSong = await SongModel.findOne({[queryKey]:queryValue})
-        if(!oneSong){
+        const oneSong = await SongModel.find({[queryKey]:queryValue})
+        if(oneSong.length===0){
             throw new Error('The song not found')
         }
         return(oneSong)
@@ -47,13 +47,14 @@ exports.getMusic = async (req,res)=>{
     let ss = []
     for (let i=0; i< allSongs.length; i++){
         ss.push({
-            id:allSongs[i]._id,
+            id:allSongs[i]._id.toString(),
             title:allSongs[i].title,
             artist:allSongs[i].artist,
             album:allSongs[i].album,
             genre:allSongs[i].genre
         })
     }
+
     return ss
 }
 

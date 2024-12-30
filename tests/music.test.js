@@ -42,7 +42,7 @@ describe('test /music',()=>{
         .send(song1)
         console.log(res.body)
     })
-    test('test /get',async()=>{
+    test.only('test /get',async()=>{
         const res = await request(app)
         .get('/get')
         console.log(res.body)
@@ -77,7 +77,7 @@ describe('test errors',()=>{
         .send(song4)
         console.log(res.body)
     })
-    test.only('test /update/:id',async()=>{
+    test('test /update/:id',async()=>{
         const res = await request(app)
         .put('/update/67686e59aa4dc6b062857fd8')
         .send(song4)
