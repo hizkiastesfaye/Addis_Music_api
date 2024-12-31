@@ -33,6 +33,7 @@ exports.getMusic = async (req,res)=>{
     if(Object.keys(req.query).length !== 0){
         const queryKey = queryy[0]
         const queryValue = queryy[1]
+        console.log('************: ',queryKey,queryValue)
         const oneSong = await SongModel.find({[queryKey]:queryValue})
         if(oneSong.length===0){
             throw new Error('The song not found')
@@ -60,11 +61,14 @@ exports.getMusic = async (req,res)=>{
 
 exports.updateMusic = async (req,res)=>{
     const err = validationResult(req)
+
     if(!err.isEmpty()){
         const errorMessages = err.array().map(error=>error.msg).join(', ')
         throw new Error(errorMessages)
     }
     const param = req.params.id
+    console.log('************: id',param)
+
     if(!param){
         throw new Error('use Id as parameter')
     }
