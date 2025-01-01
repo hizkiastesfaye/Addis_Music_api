@@ -38,7 +38,17 @@ exports.getMusic = async (req,res)=>{
         if(oneSong.length===0){
             throw new Error('The song not found')
         }
-        return(oneSong)
+        let sss = []
+        for (let i=0; i< oneSong.length; i++){
+            sss.push({
+                id:oneSong[i]._id.toString(),
+                title:oneSong[i].title,
+                artist:oneSong[i].artist,
+                album:oneSong[i].album,
+                genre:oneSong[i].genre
+            })
+        }
+        return(sss)
     }
  
     const allSongs = await SongModel.find()
@@ -90,8 +100,15 @@ exports.updateMusic = async (req,res)=>{
             throw new Error('the song not found')
         }
         console.log(updatMusic)
+
+        const newUpdatMusic = {
+            id:updatMusic._id.toString(),
+            title:updatMusic.title,
+            album:updatMusic.album,
+            genre:updatMusic.genre
+        }
         
-        return updatMusic
+        return newUpdatMusic
     }
     catch(error){
         throw new Error('Incorrect Id')
