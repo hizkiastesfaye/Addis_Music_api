@@ -90,8 +90,51 @@ exports.getMusicStatistic = async (req,res)=>{
             genre:allSongs[i].genre
         })
     }
+    const totalSongs = allSongs.length;
+    const uniqueArtist = new Set(allSongs.map((song)=>song.artist)).size;
+    const uniqueAlbums = new Set(allSongs.map((song)=>song.album)).size;
+    const uniqueGenres = new Set(allSongs.map((song)=>song.genre)).size;
 
-    return ss
+    const songsPerGenre= ss.reduce((acc,song)=>{
+        acc[song.genre] = (acc[song.genre] || 0) + 1;
+        return acc;
+    },{});
+
+    const result = ss.reduce((acc,song)=>{
+        let artistEntry = acc.find((entry)=> entry.artist === song.artist);
+        if(!artistEntry){
+            artistEntry = {
+                artist:song.artist,
+                number:0,
+                albums:[]
+            };
+            acc.push(artistEntry)
+        }
+        artistEntry.number += 1;
+
+        let albumEntry = artistEntry.albums.find((album)=>album.albumName === song.album)
+
+        if(!albumEntry){
+            albumEntry={
+                albumName:song.album,
+                number:0,
+            }
+            artistEntry.albums.push(albumEntry);
+        }
+        albumEntry.number += 1;
+        return acc;
+    },[]);
+    console.log('^^^^^^^^^: ',result,ss)
+    const final = {
+        totalSongs:totalSongs,
+        uniqueArtist:uniqueArtist,
+        uniqueAlbums:uniqueAlbums,
+        uniqueGenres:uniqueGenres,
+        songsPerGenre:songsPerGenre,
+        songs_Albums_PerArtist:result
+    } 
+    console.log(final)
+    return final
 }
 
 exports.updateMusic = async (req,res)=>{
