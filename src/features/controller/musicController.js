@@ -20,6 +20,17 @@ exports.getMusic = async(req,res)=>{
         res.status(400).json({error:err.message})
     }
 }
+exports.getMusicStatistic = async(req,res)=>{
+    
+    try{
+        const musicc = await addMusicService.getMusicStatistic(req)
+        res.json({message:musicc})
+    }
+    catch(err){
+        res.status(400).json({error:err.message})
+    }
+}
+
 
 exports.updateMusic = async(req,res)=>{
     

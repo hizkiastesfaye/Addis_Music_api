@@ -34,7 +34,7 @@ exports.getMusic = async (req,res)=>{
         const queryKey = queryy[0]
         const queryValue = queryy[1]
         console.log('************: ',queryKey,queryValue)
-        const oneSong = await SongModel.find({[queryKey]:queryValue})
+        const oneSong = await SongModel.find({[queryKey]: { $regex: `^${queryValue}$`, $options: 'i' }})
         if(oneSong.length===0){
             throw new Error('The song not found')
         }
@@ -48,9 +48,34 @@ exports.getMusic = async (req,res)=>{
                 genre:oneSong[i].genre
             })
         }
+        let unique = new Set();
+        if(queryKey === 'artist'){
+            sss.forEach((song)=>unique.add((song.album)))
+        }
+        console.log('$$$$$$$$$$$: ',unique)
         return(sss)
     }
  
+    const allSongs = await SongModel.find()
+    if(allSongs.length === 0){
+        throw new Error('Song not found')
+    }
+    let ss = []
+    for (let i=0; i< allSongs.length; i++){
+        ss.push({
+            id:allSongs[i]._id.toString(),
+            title:allSongs[i].title,
+            artist:allSongs[i].artist,
+            album:allSongs[i].album,
+            genre:allSongs[i].genre
+        })
+    }
+
+    return ss
+}
+
+exports.getMusicStatistic = async (req,res)=>{
+    console.log('This is getMusicStatisct')
     const allSongs = await SongModel.find()
     if(allSongs.length === 0){
         throw new Error('Song not found')

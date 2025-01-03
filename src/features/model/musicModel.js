@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const SongSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  artist: { type: String, required: true },
-  album: { type: String, required: true },
-  genre: { type: String, required: true },
+  title: { type: String, required: true, trim:true },
+  artist: { type: String, required: true, trim:true },
+  album: { type: String, required: true, trim:true },
+  genre: { type: String, required: true, trim:true },
   createAt:{
     type:Date,
     deault:Date.now()
