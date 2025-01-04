@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const { query } = require('express')
 const {validationResult} = require('express-validator')
 const SongModel = require('../model/musicModel')
+const {v4:uuidv4} = require('uuid')
+
 
 exports.addMusic = async (req,res)=>{
     const err = validationResult(req)
@@ -84,10 +86,10 @@ exports.getMusicStatistic = async (req,res)=>{
     for (let i=0; i< allSongs.length; i++){
         ss.push({
             id:allSongs[i]._id.toString(),
-            title:allSongs[i].title,
-            artist:allSongs[i].artist,
-            album:allSongs[i].album,
-            genre:allSongs[i].genre
+            title:allSongs[i].title.toLowerCase(),
+            artist:allSongs[i].artist.toLowerCase(),
+            album:allSongs[i].album.toLowerCase(),
+            genre:allSongs[i].genre.toLowerCase()
         })
     }
     const totalSongs = allSongs.length;
@@ -113,15 +115,28 @@ exports.getMusicStatistic = async (req,res)=>{
         artistEntry.number += 1;
 
         let albumEntry = artistEntry.albums.find((album)=>album.albumName === song.album)
-
+        const newuuid = uuidv4()
         if(!albumEntry){
             albumEntry={
+                albumId:newuuid.toString(),
                 albumName:song.album,
                 number:0,
+                songs:[]
             }
             artistEntry.albums.push(albumEntry);
         }
         albumEntry.number += 1;
+
+        let songEntry = albumEntry.songs.find((song)=>song.songTitle === song.title)
+
+        if(!songEntry){
+            songEntry={
+                songTitle:song.title,
+                songId:song.id
+
+            }
+            albumEntry.songs.push(songEntry);
+        }
         return acc;
     },[]);
     console.log('^^^^^^^^^: ',result,ss)
