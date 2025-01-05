@@ -1,4 +1,4 @@
-# Addis_Music
+# Addis Music api
 
 The backend of the Music Management Full-Stack Application is built with Node.js and Express.js.  
 It provides RESTful APIs for managing the music collection and generating statistics.  
