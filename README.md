@@ -14,10 +14,10 @@ The backend uses MongoDB (via Mongoose) as the database and is designed to be se
 
 bash  
 Copy code  
-git clone [Backend Repository URL]  
-cd [Backend Repository Folder]  
+git clone (https://github.com/hizkiastesfaye/Addis_Music_api.git)  
+```cd Addis_Music_api/```  
 Set Up Environment Variables:  
-Create a .env file in the backend directory with the following content:  
+Create .env file in the backend directory with the following content:  
   
 create .env file in root of project  
 ```touch .env```  
