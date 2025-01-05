@@ -104,10 +104,13 @@ exports.getMusicStatistic = async (req,res)=>{
 
     const result = ss.reduce((acc,song)=>{
         let artistEntry = acc.find((entry)=> entry.artist === song.artist);
+        const artistNewUuid = uuidv4()
         if(!artistEntry){
             artistEntry = {
+                artistId:artistNewUuid.toString(),
                 artist:song.artist,
                 number:0,
+                songNumber:0,
                 albums:[]
             };
             acc.push(artistEntry)
@@ -137,6 +140,7 @@ exports.getMusicStatistic = async (req,res)=>{
             }
             albumEntry.songs.push(songEntry);
         }
+        artistEntry.songNumber += 1
         return acc;
     },[]);
     console.log('^^^^^^^^^: ',result,ss)
